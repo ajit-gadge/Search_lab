@@ -1,0 +1,27 @@
+==== Fulltext search or text based vector search in Postgresql=====
+
+
+Add tsvector data typeAS column textsearchable_index_col
+
+ALTER TABLE articles ADD COLUMN textsearchable_index_col TSVECTOR;  
+
+======Then update the data as fulltext search keywrod update  i.e title and body.======
+
+UPDATE articles SET textsearchable_index_col = to_tsvector('english', title || ' ' || body);
+
+=== Create speciliase fulltext based search index GIN===========
+
+
+CREATE INDEX textsearch_idx ON articles USING GIN (textsearchable_index_col);
+
+========= Search PostgreSQL & vector as keyword with fulltext search ==========================
+
+
+SELECT id,title, body FROM articles WHERE textsearchable_index_col @@ to_tsquery('english', 'PostgreSQL & vector');
+
+===== Ranking in fulltext search =============================
+
+SELECT id,title, body, ts_rank_cd(textsearchable_index_col, query) AS rank
+FROM articles, to_tsquery('english', 'PostgreSQL & vector') query
+WHERE textsearchable_index_col @@ query
+ORDER BY rank DESC;
