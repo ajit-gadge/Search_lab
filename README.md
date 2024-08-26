@@ -19,4 +19,4 @@ Step 4: Now, let's do the semantic search based on the pgvector. The “Data_Emb
 Step 5: After embedding the vector data into the same table using the LLM model, let's do a simple hybrid search, combining keyword-based full-text search + Similarity/Semantic search. Here, we are using a cosine similarity search operator with ranking functionality. This will produce results ordered by or ranked by the cross-encoder LLM model. Use the “hybrid_search_with_ranking.py” script to run this step.
 
 Step 6: Similar to #5, we are doing a hybrid search, which combines a full-text-based search for keyword searching and a semantic search for similarity search. We have used “distance” to rank the results. Observe the ranking, which is different in step #5 and step #6 here.  Use the “Hybrid_Search_SQL_with_Distance” script.
-![image](https://github.com/user-attachments/assets/6f17af52-9974-42af-a4ce-1d53a536cd42)
+
