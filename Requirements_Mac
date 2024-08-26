@@ -1,0 +1,61 @@
+1: Postgresql 15 or above
+
+
+# Install Homebrew if not already installed
+if ! command -v brew &> /dev/null
+then
+    echo "Homebrew not found. Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+    echo "Homebrew already installed."
+fi
+
+# Update Homebrew
+brew update
+
+# Install PostgreSQL 15
+brew install postgresql@15
+
+# Start PostgreSQL service
+brew services start postgresql@15
+
+
+
+2: pgvector
+
+# Install pgvector extension
+brew install pgvector
+psql -d postgres -c "CREATE EXTENSION IF NOT EXISTS vector;"
+
+3: python 3.12 +
+
+# Install Python 3.12
+brew install python@3.12
+
+# Create a virtual environment
+python3.12 -m venv pgvector_env
+source pgvector_env/bin/activate
+
+# Upgrade pip
+pip install --upgrade pip
+
+4: numpy 1.1+
+5: psycopg2
+6: SentenceTransformer, CrossEncoder
+
+# Install Python packages
+pip install "numpy>=1.1" psycopg2-binary sentence-transformers
+
+# Verification 
+
+# Verify installations
+echo "PostgreSQL version:"
+psql --version
+
+echo "Python version:"
+python --version
+
+echo "Installed Python packages:"
+pip freeze | grep -E "numpy|psycopg2|sentence-transformers"
+
+echo "Environment setup complete!"
