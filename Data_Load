@@ -1,0 +1,24 @@
+=== Data Loading ========
+=== Create Table in PostgreSQL with vector as Data type======
+
+CREATE TABLE articles (
+    id SERIAL PRIMARY KEY,
+    title TEXT,
+    body TEXT,
+    textsearchable_index_col tsvector,
+    embeddings vector(384)
+);
+
+=== Inserting Sample records ============================================
+
+
+INSERT INTO articles (title, body) VALUES ('PostgreSQL Tutorial', 'This tutorial covers the basics of PostgreSQL.');
+INSERT INTO articles (title, body) VALUES ('Full-Text Search in PostgreSQL', 'This article explains how to use full-text search in PostgreSQL.');
+INSERT INTO articles  (title, body)  VALUES ('pgvector', 'pgvector is a PostgreSQL extension that provides support for vector similarity search and nearest neighbour search in SQL.');
+INSERT INTO articles  (title, body) VALUES ('pg_similarity', 'pg_similarity is a PostgreSQL extension that provides similarity and distance operators for vector columns.');
+INSERT INTO articles  (title, body) VALUES ('pg_trgm', 'pg_trgm is a PostgreSQL extension that provides functions and operators for determining the similarity of alphanumeric text based on trigram matching.');
+INSERT INTO articles   (title, body) VALUES ('pg_prewarm', 'pg_prewarm is a PostgreSQL extension that provides functions for prewarming relation data into the PostgreSQL buffer cache.');
+INSERT INTO articles (title, body) VALUES ('PostgreSQL Indexing', 'This article explores the different types of indexing available in PostgreSQL and how they can be used to optimize query performance.');
+INSERT INTO articles (title, body) VALUES ('Advanced PostgreSQL Queries', 'This tutorial delves into advanced querying techniques in PostgreSQL, including window functions, CTEs, and recursive queries.');
+INSERT INTO articles  (title, body)  VALUES ('PostGIS', 'PostGIS is a PostgreSQL extension that adds support for geographic objects, allowing for location queries to be run in SQL');
+INSERT INTO articles  (title, body) VALUES ('pg_stat_statements', 'pg_stat_statements is a PostgreSQL extension that tracks execution statistics of all SQL statements executed by a server.');
