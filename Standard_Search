@@ -1,0 +1,14 @@
+== ==Search Simple Keyword as Stadard Search in Postgresql======
+
+select id,title,body from articles where title like '%PostgreSQL%';
+
+select id,title,body from articles where body like '%PostgreSQL%';
+
+
+=====But if i try to search the combination of words like “PostgreSQL & vector” then lets see how it give us results.====
+
+select id,title,body from articles where body like '%PostgreSQL & vector%';
+
+=====So standard search doesnt understand the conjuction of word like here “&” or stemming word. This is challange of strandard search. 
+
+
