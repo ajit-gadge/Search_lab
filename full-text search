@@ -1,9 +1,6 @@
 ==== Fulltext search or text based vector search in Postgresql=====
 
-
-Add tsvector data typeAS column textsearchable_index_col
-
-ALTER TABLE articles ADD COLUMN textsearchable_index_col TSVECTOR;  
+Already added column textsearchable_index_col as tsvector data type. 
 
 ======Then update the data as fulltext search keywrod update  i.e title and body.======
 
