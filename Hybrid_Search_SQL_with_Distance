@@ -1,0 +1,42 @@
+== Hybrid Search with SQL query with order by Distace Similarity  ======
+
+
+WITH pgv AS (
+    SELECT a.id, a.embeddings
+    FROM articles AS b
+    JOIN articles AS a USING (id)
+    WHERE a.textsearchable_index_col @@ to_tsquery('english', 'PostgreSQL & vector')
+)
+SELECT *
+FROM (
+    SELECT 
+        a.id, a.title, a.body, a.embeddings <=> pgv.embeddings AS similarity,
+        ROW_NUMBER() OVER (PARTITION BY a.id ORDER BY a.embeddings <-> pgv.embeddings ASC) AS rn
+    FROM articles AS a
+    JOIN pgv ON true
+    WHERE a.embeddings <=> pgv.embeddings < 0.7
+) AS subquery
+WHERE subquery.rn = 1
+ORDER BY subquery.similarity ASC;
+
+
+==== In Same query change the cosine distance and get more near by results with ranking====
+
+
+WITH pgv AS (
+    SELECT a.id, a.embeddings
+    FROM articles AS b
+    JOIN articles AS a USING (id)
+    WHERE a.textsearchable_index_col @@ to_tsquery('english', 'PostgreSQL & vector')
+)
+SELECT *
+FROM (
+    SELECT 
+        a.id, a.title, a.body, a.embeddings <=> pgv.embeddings AS similarity,
+        ROW_NUMBER() OVER (PARTITION BY a.id ORDER BY a.embeddings <-> pgv.embeddings ASC) AS rn
+    FROM articles AS a
+    JOIN pgv ON true
+    WHERE a.embeddings <=> pgv.embeddings < 1
+) AS subquery
+WHERE subquery.rn = 1
+ORDER BY subquery.similarity ASC;
