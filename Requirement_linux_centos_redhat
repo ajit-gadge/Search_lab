@@ -1,0 +1,57 @@
+1: Postgresql 15 or above
+
+# Install EPEL repository and necessary development tools
+sudo yum install -y epel-release
+sudo yum groupinstall -y "Development Tools"
+sudo yum install -y wget curl ca-certificates lsb-release
+
+# Install PostgreSQL 15
+sudo yum install -y https://download.postgresql.org/pub/repos/yum/15/redhat/rhel-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+sudo yum install -y postgresql15 postgresql15-server postgresql15-devel
+
+# Initialize and start PostgreSQL service
+sudo /usr/pgsql-15/bin/postgresql-15-setup initdb
+sudo systemctl enable postgresql-15
+sudo systemctl start postgresql-15
+
+
+2: pgvector
+
+# Install pgvector extension
+sudo yum install -y pgvector
+sudo -u postgres psql -c "CREATE EXTENSION IF NOT EXISTS vector;"
+
+
+3: python 3.12 +
+
+# Install Python 3.12
+sudo yum install -y https://repo.ius.io/ius-release-el7.rpm
+sudo yum install -y python312 python312-devel python312-pip
+
+# Create a virtual environment
+python3.12 -m venv pgvector_env
+source pgvector_env/bin/activate
+
+# Upgrade pip
+pip install --upgrade pip
+
+4: numpy 1.1+
+5: psycopg2
+6: SentenceTransformer, CrossEncoder
+
+# Install Python packages
+pip install "numpy>=1.1" psycopg2-binary sentence-transformers
+
+# Verification 
+
+# Verify installations
+echo "PostgreSQL version:"
+/usr/pgsql-15/bin/psql --version
+
+echo "Python version:"
+python --version
+
+echo "Installed Python packages:"
+pip freeze | grep -E "numpy|psycopg2|sentence-transformers"
+
+echo "Environment setup complete!"

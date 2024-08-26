@@ -1,6 +1,0 @@
-Postgresql 13 or above
-pgvector
-python 3.10 +
-numpy 1.1+
-psycopg2
-SentenceTransformer, CrossEncoder
