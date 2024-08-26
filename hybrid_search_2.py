@@ -1,3 +1,5 @@
+=====Embedding the data for semantic search and Hybrid Search =====================
+
 import psycopg2
 from psycopg2.extras import execute_values
 from sentence_transformers import SentenceTransformer
@@ -9,10 +11,10 @@ model = SentenceTransformer('all-MiniLM-L6-v2')
 
 # Establish the connection to the PostgreSQL database
 conn = psycopg2.connect(
-    host="p-w8tcwidcr2.pg.biganimal.io",
-    database="edb_admin",
-    user="edb_admin",
-    password="Password#123"
+    host="",
+    database="",
+    user="",
+    password=""
 )
 cursor = conn.cursor()
 
