@@ -80,3 +80,6 @@ if __name__ == "__main__":
     reduced_embeddings = reduce_dimensionality(embeddings, method='PCA')  # Change to 'TSNE' if you want to use t-SNE
     plot_embeddings(reduced_embeddings, titles)
 
+
+
+
