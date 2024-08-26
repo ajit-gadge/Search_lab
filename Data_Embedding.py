@@ -1,10 +1,13 @@
+=====Embedding the data for semantic search and Hybrid Search =====================
+
+
 import psycopg2
 from psycopg2.extras import execute_values
 from sentence_transformers import SentenceTransformer
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning, module="transformers.tokenization_utils_base")
 
-# Load the model
+# Load the model. Use General LLM model 'allMiniLM-L6-v2' for simple text
 model = SentenceTransformer('all-MiniLM-L6-v2')
 
 # Establish the connection to the PostgreSQL database
