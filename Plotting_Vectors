@@ -1,0 +1,82 @@
+==== Plotting vectors for visulisations ====
+
+# Install required packages if not already installed
+!pip install psycopg2-binary matplotlib scikit-learn
+
+# Import required libraries
+import psycopg2
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
+import ast  # Import ast module
+import matplotlib.cm as cm  # Import color map
+
+# Step 1: Connect to PostgreSQL and Fetch Embeddings
+def fetch_embeddings():
+    # Connect to PostgreSQL database
+    conn = psycopg2.connect(
+        host="",
+        database="",
+        user="",
+        password=""
+    )
+    cursor = conn.cursor()
+
+    # Fetch the embeddings and associated titles from the articles table
+    cursor.execute("SELECT title, embeddings FROM articles")
+    results = cursor.fetchall()
+
+    # Close the database connection
+    cursor.close()
+    conn.close()
+
+    # Extract titles and embeddings
+    titles = [row[0] for row in results]
+    embeddings = np.array([ast.literal_eval(row[1]) if isinstance(row[1], str) else row[1] for row in results])
+  
+    return titles, embeddings
+
+# Step 2: Reduce Dimensionality (using PCA or t-SNE)
+def reduce_dimensionality(embeddings, method='PCA'):
+    if method == 'PCA':
+        # Reduce the dimensionality of embeddings to 2D using PCA
+        reducer = PCA(n_components=2)
+    elif method == 'TSNE':
+        # Alternatively, reduce the dimensionality using t-SNE
+        reducer = TSNE(n_components=2, perplexity=30, n_iter=300)
+    
+    reduced_embeddings = reducer.fit_transform(embeddings)
+    return reduced_embeddings
+
+# Step 3: Plot the Reduced Embeddings with Different Colors and Smaller Legend Font
+def plot_embeddings(reduced_embeddings, titles):
+    # Create a scatter plot of the reduced embeddings
+    plt.figure(figsize=(14, 10))
+    
+    # Generate a color for each point
+    colors = cm.rainbow(np.linspace(0, 1, len(titles)))
+    
+    for i, title in enumerate(titles):
+        plt.scatter(reduced_embeddings[i, 0], reduced_embeddings[i, 1], color=colors[i], label=title)
+    
+    # Annotate points with titles
+    for i, title in enumerate(titles):
+        plt.annotate(title, (reduced_embeddings[i, 0], reduced_embeddings[i, 1]))
+
+    plt.title("2D Visualization of Article Embeddings")
+    plt.xlabel("Component 1")
+    plt.ylabel("Component 2")
+    plt.grid(True)
+    
+    # Adjust legend font size
+    plt.legend(loc='best', fontsize='small')
+    
+    plt.show()
+
+# Step 4: Run the Entire Process
+if __name__ == "__main__":
+    titles, embeddings = fetch_embeddings()
+    reduced_embeddings = reduce_dimensionality(embeddings, method='PCA')  # Change to 'TSNE' if you want to use t-SNE
+    plot_embeddings(reduced_embeddings, titles)
+
