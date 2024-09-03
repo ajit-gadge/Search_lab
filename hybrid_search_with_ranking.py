@@ -1,4 +1,4 @@
-== Hybrid Search with Ranking. Full text search to search for keyword and Semantic search to do near by search with ranking ========
+# Hybrid Search with Ranking. Full text search to search for keyword and Semantic search to do near by search with ranking ========
 
 import psycopg2
 from sentence_transformers import SentenceTransformer, CrossEncoder
